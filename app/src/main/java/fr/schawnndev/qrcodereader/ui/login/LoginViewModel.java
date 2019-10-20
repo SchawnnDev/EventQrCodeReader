@@ -29,30 +29,28 @@ public class LoginViewModel extends ViewModel {
         return loginResult;
     }
 
-    public void login(String username, String password) {
+    public void login(String apiKey) {
         // can be launched in a separate asynchronous job
-        Result<LoggedInUser> result = loginRepository.login(username, password);
+        Result<LoggedInUser> result = loginRepository.login(apiKey);
 
         if (result instanceof Result.Success) {
             LoggedInUser data = ((Result.Success<LoggedInUser>) result).getData();
-            loginResult.setValue(new LoginResult(new LoggedInUserView(data.getDisplayName())));
+            loginResult.setValue(new LoginResult(new LoggedInUserView(data.getApiKey())));
         } else {
             loginResult.setValue(new LoginResult(R.string.login_failed));
         }
     }
 
-    public void loginDataChanged(String username, String password) {
-        if (!isUserNameValid(username)) {
-            loginFormState.setValue(new LoginFormState(R.string.invalid_username, null));
-        } else if (!isPasswordValid(password)) {
-            loginFormState.setValue(new LoginFormState(null, R.string.invalid_password));
+    public void loginDataChanged(String apiKey) {
+        if (!isApiKeyValid(apiKey)) {
+            loginFormState.setValue(new LoginFormState(R.string.invalid_apikey));
         } else {
             loginFormState.setValue(new LoginFormState(true));
         }
     }
 
     // A placeholder username validation check
-    private boolean isUserNameValid(String username) {
+    private boolean isApiKeyValid(String username) {
         if (username == null) {
             return false;
         }
@@ -63,8 +61,4 @@ public class LoginViewModel extends ViewModel {
         }
     }
 
-    // A placeholder password validation check
-    private boolean isPasswordValid(String password) {
-        return password != null && password.trim().length() > 5;
-    }
 }

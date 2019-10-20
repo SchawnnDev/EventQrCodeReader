@@ -7,31 +7,22 @@ import androidx.annotation.Nullable;
  */
 class LoginFormState {
     @Nullable
-    private Integer usernameError;
-    @Nullable
-    private Integer passwordError;
+    private Integer apiKeyError;
     private boolean isDataValid;
 
-    LoginFormState(@Nullable Integer usernameError, @Nullable Integer passwordError) {
-        this.usernameError = usernameError;
-        this.passwordError = passwordError;
+    LoginFormState(@Nullable Integer apiKeyError) {
+        this.apiKeyError = apiKeyError;
         this.isDataValid = false;
     }
 
     LoginFormState(boolean isDataValid) {
-        this.usernameError = null;
-        this.passwordError = null;
+        this.apiKeyError = null;
         this.isDataValid = isDataValid;
     }
 
     @Nullable
-    Integer getUsernameError() {
-        return usernameError;
-    }
-
-    @Nullable
-    Integer getPasswordError() {
-        return passwordError;
+    Integer getApiKeyError() {
+        return apiKeyError;
     }
 
     boolean isDataValid() {

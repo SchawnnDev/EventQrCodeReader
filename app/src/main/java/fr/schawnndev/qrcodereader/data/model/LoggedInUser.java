@@ -5,19 +5,13 @@ package fr.schawnndev.qrcodereader.data.model;
  */
 public class LoggedInUser {
 
-    private String userId;
-    private String displayName;
+    private String apiKey;
 
-    public LoggedInUser(String userId, String displayName) {
-        this.userId = userId;
-        this.displayName = displayName;
+    public LoggedInUser(String apiKey) {
+        this.apiKey = apiKey;
     }
 
-    public String getUserId() {
-        return userId;
-    }
-
-    public String getDisplayName() {
-        return displayName;
+    public String getApiKey() {
+        return apiKey;
     }
 }
