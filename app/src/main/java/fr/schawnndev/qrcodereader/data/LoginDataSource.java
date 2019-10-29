@@ -1,5 +1,6 @@
 package fr.schawnndev.qrcodereader.data;
 
+import fr.schawnndev.qrcodereader.backend.BackendServer;
 import fr.schawnndev.qrcodereader.data.model.LoggedInUser;
 
 import java.io.IOException;
@@ -9,12 +10,17 @@ import java.io.IOException;
  */
 public class LoginDataSource {
 
-    public Result<LoggedInUser> login(String apiKey) {
+    public Result<LoggedInUser> login(String apiKey, String email) {
 
         try {
-            // TODO: handle loggedInUser authentication
-            LoggedInUser fakeUser = new LoggedInUser(apiKey);
-            return new Result.Success<>(fakeUser);
+
+            if(BackendServer.Login(apiKey, email))
+            {
+                return new Result.Success<>(new LoggedInUser(apiKey, email));
+            } else {
+                return new Result.Error(new IOException("Login informations are not valid!"));
+            }
+
         } catch (Exception e) {
             return new Result.Error(new IOException("Error logging in", e));
         }

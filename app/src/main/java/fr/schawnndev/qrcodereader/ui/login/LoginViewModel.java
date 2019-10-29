@@ -29,35 +29,43 @@ public class LoginViewModel extends ViewModel {
         return loginResult;
     }
 
-    public void login(String apiKey) {
+    public void login(String apiKey, String email) {
         // can be launched in a separate asynchronous job
-        Result<LoggedInUser> result = loginRepository.login(apiKey);
+        Result<LoggedInUser> result = loginRepository.login(apiKey, email);
 
         if (result instanceof Result.Success) {
             LoggedInUser data = ((Result.Success<LoggedInUser>) result).getData();
-            loginResult.setValue(new LoginResult(new LoggedInUserView(data.getApiKey())));
+            loginResult.setValue(new LoginResult(new LoggedInUserView(data.getApiKey(), data.getEmail())));
         } else {
             loginResult.setValue(new LoginResult(R.string.login_failed));
         }
     }
 
-    public void loginDataChanged(String apiKey) {
+    public void loginDataChanged(String apiKey, String email) {
+
         if (!isApiKeyValid(apiKey)) {
-            loginFormState.setValue(new LoginFormState(R.string.invalid_apikey));
+            loginFormState.setValue(new LoginFormState(R.string.invalid_apikey, null));
+        } else if (!isEmailValid(email)) {
+            loginFormState.setValue(new LoginFormState(null, R.string.invalid_email));
         } else {
             loginFormState.setValue(new LoginFormState(true));
         }
     }
 
     // A placeholder username validation check
-    private boolean isApiKeyValid(String username) {
-        if (username == null) {
+    private boolean isApiKeyValid(String apiKey) {
+        return apiKey != null && !apiKey.isEmpty();
+    }
+
+    private boolean isEmailValid(String email)
+    {
+        if (email == null || email.isEmpty())
             return false;
-        }
-        if (username.contains("@")) {
-            return Patterns.EMAIL_ADDRESS.matcher(username).matches();
+
+        if (email.contains("@")) {
+            return Patterns.EMAIL_ADDRESS.matcher(email).matches();
         } else {
-            return !username.trim().isEmpty();
+            return !email.trim().isEmpty();
         }
     }
 

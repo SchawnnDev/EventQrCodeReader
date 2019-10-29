@@ -38,7 +38,8 @@ public class LoginActivity extends AppCompatActivity {
                 .get(LoginViewModel.class);
 
         //  final EditText usernameEditText = findViewById(R.id.username);
-        final EditText passwordEditText = findViewById(R.id.api_key);
+        final EditText apiKeyEditText = findViewById(R.id.api_key);
+        final EditText emailEditText = findViewById(R.id.email);
         final Button loginButton = findViewById(R.id.login);
         final ProgressBar loadingProgressBar = findViewById(R.id.loading);
 
@@ -52,7 +53,11 @@ public class LoginActivity extends AppCompatActivity {
                 loginButton.setEnabled(loginFormState.isDataValid());
 
                 if (loginFormState.getApiKeyError() != null) {
-                    passwordEditText.setError(getString(loginFormState.getApiKeyError()));
+                    apiKeyEditText.setError(getString(loginFormState.getApiKeyError()));
+                }
+
+                if (loginFormState.getEmailError() != null) {
+                    emailEditText.setError(getString(loginFormState.getEmailError()));
                 }
             }
         });
@@ -90,17 +95,17 @@ public class LoginActivity extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-                loginViewModel.loginDataChanged(passwordEditText.getText().toString());
+                loginViewModel.loginDataChanged(apiKeyEditText.getText().toString(), emailEditText.getText().toString());
             }
         };
         //    usernameEditText.addTextChangedListener(afterTextChangedListener);
-        passwordEditText.addTextChangedListener(afterTextChangedListener);
-        passwordEditText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+        apiKeyEditText.addTextChangedListener(afterTextChangedListener);
+        apiKeyEditText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
 
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if (actionId == EditorInfo.IME_ACTION_DONE) {
-                    loginViewModel.login(passwordEditText.getText().toString());
+                    loginViewModel.login(apiKeyEditText.getText().toString(), emailEditText.getText().toString());
                 }
                 return false;
             }
@@ -110,7 +115,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 loadingProgressBar.setVisibility(View.VISIBLE);
-                loginViewModel.login(passwordEditText.getText().toString());
+                loginViewModel.login(apiKeyEditText.getText().toString(), emailEditText.getText().toString());
             }
         });
     }
