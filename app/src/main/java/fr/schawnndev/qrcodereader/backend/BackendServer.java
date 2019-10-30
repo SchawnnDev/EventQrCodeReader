@@ -23,6 +23,7 @@ public class BackendServer {
 
         try {
             JSONObject jsonObject = readJsonFromUrl(url);
+            if(jsonObject != null) System.out.println(jsonObject.toString());
             return jsonObject != null && jsonObject.getBoolean("success");
         } catch (IOException e) {
             e.printStackTrace();
@@ -35,7 +36,7 @@ public class BackendServer {
 
     private static String getUrl(String action, String args)
     {
-        return "http://localhost:7473/api/" + action + "/" + args;
+        return "https://billets.schawnndev.fr/api/" + action + "/" + args;
     }
 
     private static String readAll(Reader rd) throws IOException {
