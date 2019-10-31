@@ -36,6 +36,7 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         loginViewModel = ViewModelProviders.of(this, new LoginViewModelFactory())
                 .get(LoginViewModel.class);
+        loginViewModel.setAppContext(this);
 
         //  final EditText usernameEditText = findViewById(R.id.username);
         final EditText apiKeyEditText = findViewById(R.id.api_key);
