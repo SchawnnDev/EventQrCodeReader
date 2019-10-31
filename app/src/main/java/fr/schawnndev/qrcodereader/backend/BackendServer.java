@@ -12,29 +12,37 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.net.URL;
 import java.nio.charset.Charset;
+import java.util.Scanner;
+
+import javax.net.ssl.HttpsURLConnection;
 
 public class BackendServer {
-
-    public static boolean Login(String apiKey, String email)
+    public static String getLoginUrl(String apiKey, String email)
     {
         String args = apiKey + "§§" + email;
         String encodedArgs = Base64.encodeToString(args.getBytes(),Base64.NO_WRAP | Base64.URL_SAFE);
-        String url = getUrl("login", encodedArgs);
-
-        try {
-            JSONObject jsonObject = readJsonFromUrl(url);
-            if(jsonObject != null) System.out.println(jsonObject.toString());
-            return jsonObject != null && jsonObject.getBoolean("success");
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
-        return false;
+        return getUrl("login", encodedArgs);
     }
 
-    private static String getUrl(String action, String args)
+    private static String streamToString(InputStream inputStream) {
+        String text = new Scanner(inputStream, "UTF-8").useDelimiter("\\Z").next();
+        return text;
+    }
+
+    public static JSONObject jsonGetRequest(String urlQueryString) throws JSONException, IOException {
+        URL url = new URL(urlQueryString);
+        HttpsURLConnection connection = (HttpsURLConnection) url.openConnection();
+        connection.setDoOutput(true);
+        connection.setInstanceFollowRedirects(false);
+        connection.setRequestMethod("GET");
+        connection.setRequestProperty("Content-Type", "application/json");
+        connection.setRequestProperty("charset", "utf-8");
+        connection.connect();
+        InputStream inStream = connection.getInputStream();
+        return new JSONObject(streamToString(inStream));
+    }
+
+    public static String getUrl(String action, String args)
     {
         return "https://billets.schawnndev.fr/api/" + action + "/" + args;
     }
