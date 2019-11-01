@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import android.content.Context;
+import android.util.Log;
 import android.util.Patterns;
 
 import com.android.volley.Request;
@@ -16,6 +17,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import fr.schawnndev.qrcodereader.backend.BackendServer;
+import fr.schawnndev.qrcodereader.backend.HttpsTrustManager;
 import fr.schawnndev.qrcodereader.backend.tasks.Singleton;
 import fr.schawnndev.qrcodereader.data.LoginRepository;
 import fr.schawnndev.qrcodereader.data.Result;
@@ -45,6 +47,7 @@ public class LoginViewModel extends ViewModel {
         // can be launched in a separate asynchronous job
        // Result<LoggedInUser> result = loginRepository.login(apiKey, email);
 
+        HttpsTrustManager.allowAllSSL();
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
                 (Request.Method.GET, BackendServer.getLoginUrl(apiKey, email), null, new Response.Listener<JSONObject>() {
 
@@ -65,6 +68,13 @@ public class LoginViewModel extends ViewModel {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         loginResult.setValue(new LoginResult(R.string.login_failed));
+                       // System.out.println(error.getStackTrace());
+                       // Log.e("[Error]", error.getMessage());
+
+                        for (StackTraceElement e:
+                        error.getStackTrace()) {
+                            Log.e("[StackTrace]", e.toString());
+                        }
                     }
                 });
 
@@ -83,11 +93,15 @@ public class LoginViewModel extends ViewModel {
 
         if (!isApiKeyValid(apiKey)) {
             loginFormState.setValue(new LoginFormState(R.string.invalid_apikey, null));
-        } else if (!isEmailValid(email)) {
-            loginFormState.setValue(new LoginFormState(null, R.string.invalid_email));
-        } else {
-            loginFormState.setValue(new LoginFormState(true));
+            return;
         }
+        if (!isEmailValid(email)) {
+            loginFormState.setValue(new LoginFormState(null, R.string.invalid_email));
+            return;
+        }
+
+        loginFormState.setValue(new LoginFormState(true));
+
     }
 
     // A placeholder username validation check
