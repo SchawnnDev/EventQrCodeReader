@@ -23,6 +23,8 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.cloudflare.api.CFMobile;
+
 import fr.schawnndev.qrcodereader.MainActivity;
 import fr.schawnndev.qrcodereader.R;
 
@@ -38,7 +40,9 @@ public class LoginActivity extends AppCompatActivity {
                 .get(LoginViewModel.class);
         loginViewModel.setAppContext(this);
 
-        //  final EditText usernameEditText = findViewById(R.id.username);
+    //    CFMobile.initialize(getApplicationContext(),"ffc80c882eba755f493f56cd879277e7a05db");
+
+                //  final EditText usernameEditText = findViewById(R.id.username);
         final EditText apiKeyEditText = findViewById(R.id.api_key);
         final EditText emailEditText = findViewById(R.id.email);
         final Button loginButton = findViewById(R.id.login);
@@ -79,7 +83,7 @@ public class LoginActivity extends AppCompatActivity {
                 setResult(Activity.RESULT_OK);
 
                 //Complete and destroy login activity once successful
-                finish();
+                //finish();
             }
         });
 

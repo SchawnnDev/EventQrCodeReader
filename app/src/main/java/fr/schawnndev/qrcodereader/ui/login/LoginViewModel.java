@@ -17,23 +17,16 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import fr.schawnndev.qrcodereader.backend.BackendServer;
-import fr.schawnndev.qrcodereader.backend.HttpsTrustManager;
 import fr.schawnndev.qrcodereader.backend.tasks.Singleton;
-import fr.schawnndev.qrcodereader.data.LoginRepository;
-import fr.schawnndev.qrcodereader.data.Result;
-import fr.schawnndev.qrcodereader.data.model.LoggedInUser;
 import fr.schawnndev.qrcodereader.R;
 
 public class LoginViewModel extends ViewModel {
 
     private MutableLiveData<LoginFormState> loginFormState = new MutableLiveData<>();
     private MutableLiveData<LoginResult> loginResult = new MutableLiveData<>();
-    private LoginRepository loginRepository;
     private Context appContext;
 
-    LoginViewModel(LoginRepository loginRepository) {
-        this.loginRepository = loginRepository;
-    }
+    LoginViewModel() { }
 
     LiveData<LoginFormState> getLoginFormState() {
         return loginFormState;
@@ -44,10 +37,6 @@ public class LoginViewModel extends ViewModel {
     }
 
     public void login(final String apiKey, final String email) {
-        // can be launched in a separate asynchronous job
-       // Result<LoggedInUser> result = loginRepository.login(apiKey, email);
-
-        HttpsTrustManager.allowAllSSL();
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
                 (Request.Method.GET, BackendServer.getLoginUrl(apiKey, email), null, new Response.Listener<JSONObject>() {
 
@@ -68,8 +57,6 @@ public class LoginViewModel extends ViewModel {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         loginResult.setValue(new LoginResult(R.string.login_failed));
-                       // System.out.println(error.getStackTrace());
-                       // Log.e("[Error]", error.getMessage());
 
                         for (StackTraceElement e:
                         error.getStackTrace()) {
@@ -78,15 +65,8 @@ public class LoginViewModel extends ViewModel {
                     }
                 });
 
-// Access the RequestQueue through your singleton class.
         Singleton.getInstance(appContext).addToRequestQueue(jsonObjectRequest);
-/*
-        if (result instanceof Result.Success) {
-            LoggedInUser data = ((Result.Success<LoggedInUser>) result).getData();
 
-        } else {
-
-        }*/
     }
 
     public void loginDataChanged(String apiKey, String email) {
