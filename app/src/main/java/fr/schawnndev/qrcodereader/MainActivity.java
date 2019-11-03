@@ -163,11 +163,11 @@ public class MainActivity extends AppCompatActivity implements BarcodeReaderFrag
 
         TextView hasPaid = dialog.findViewById(R.id.hasPaid);
         hasPaid.setText(scan.isHasPaid() ? "Oui" : "Non");
-        hasPaid.setBackgroundColor(scan.isHasPaid() ? Color.GREEN : Color.MAGENTA);
+        hasPaid.setBackgroundColor(scan.isHasPaid() ? Color.GREEN : Color.RED);
 
         TextView alreadyScanned = dialog.findViewById(R.id.alreadyScanned);
         alreadyScanned.setText(scan.isAlreadyScanned() ? "Oui" : "Non");
-        alreadyScanned.setBackgroundColor(scan.isAlreadyScanned() ? Color.GREEN : Color.MAGENTA);
+        alreadyScanned.setBackgroundColor(scan.isAlreadyScanned() ? Color.GREEN : Color.RED);
 
         Button closeBtn = dialog.findViewById(R.id.close);
         closeBtn.setOnClickListener(new View.OnClickListener() {
