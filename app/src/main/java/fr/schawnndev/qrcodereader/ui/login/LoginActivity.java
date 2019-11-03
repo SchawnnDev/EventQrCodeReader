@@ -23,10 +23,10 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.cloudflare.api.CFMobile;
-
 import fr.schawnndev.qrcodereader.MainActivity;
 import fr.schawnndev.qrcodereader.R;
+import fr.schawnndev.qrcodereader.backend.BackendServer;
+import fr.schawnndev.qrcodereader.data.model.LoggedInUser;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -40,7 +40,6 @@ public class LoginActivity extends AppCompatActivity {
                 .get(LoginViewModel.class);
         loginViewModel.setAppContext(this);
 
-    //    CFMobile.initialize(getApplicationContext(),"ffc80c882eba755f493f56cd879277e7a05db");
 
                 //  final EditText usernameEditText = findViewById(R.id.username);
         final EditText apiKeyEditText = findViewById(R.id.api_key);
@@ -130,12 +129,14 @@ public class LoginActivity extends AppCompatActivity {
         // TODO : initiate successful logged in experience
         Toast.makeText(getApplicationContext(), welcome, Toast.LENGTH_LONG).show(); */
 
+        BackendServer.setLoggedInUser(new LoggedInUser(model.getApiKey(), model.getEmail()));
+
         Intent myIntent = new Intent(LoginActivity.this, MainActivity.class);
-        myIntent.putExtra("api_key", model.getApiKey()); //Optional parameters
+        //myIntent.putExtra("api_key", model.getApiKey()); //Optional parameters
         LoginActivity.this.startActivity(myIntent);
     }
 
     private void showLoginFailed(@StringRes Integer errorString) {
-        //Toast.makeText(getApplicationContext(), errorString, Toast.LENGTH_SHORT).show();
+        Toast.makeText(getApplicationContext(), errorString, Toast.LENGTH_SHORT).show();
     }
 }

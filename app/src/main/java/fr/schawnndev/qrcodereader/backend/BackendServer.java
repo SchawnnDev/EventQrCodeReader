@@ -16,7 +16,25 @@ import java.util.Scanner;
 
 import javax.net.ssl.HttpsURLConnection;
 
+import fr.schawnndev.qrcodereader.data.model.LoggedInUser;
+
 public class BackendServer {
+
+    private static LoggedInUser loggedInUser;
+
+    public static void setLoggedInUser(LoggedInUser loggedInUser) {
+        BackendServer.loggedInUser = loggedInUser;
+    }
+
+    public static LoggedInUser getLoggedInUser() {
+        return loggedInUser;
+    }
+
+    public static void logout()
+    {
+        loggedInUser = null;
+    }
+
     public static String getLoginUrl(String apiKey, String email)
     {
         String args = apiKey + "§§" + email;
@@ -26,9 +44,9 @@ public class BackendServer {
 
     public static String getScanUrl(String apiKey, String email, String qrCode)
     {
-        String args = apiKey + "§§" + email;
+        String args = apiKey + "§§" + email + "§§" + qrCode;
         String encodedArgs = Base64.encodeToString(args.getBytes(),Base64.NO_WRAP | Base64.URL_SAFE);
-        return getUrl("login", encodedArgs);
+        return getUrl("scan", encodedArgs);
     }
 
     public static String getUrl(String action, String args)

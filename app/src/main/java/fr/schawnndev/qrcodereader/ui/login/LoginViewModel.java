@@ -1,5 +1,6 @@
 package fr.schawnndev.qrcodereader.ui.login;
 
+import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
