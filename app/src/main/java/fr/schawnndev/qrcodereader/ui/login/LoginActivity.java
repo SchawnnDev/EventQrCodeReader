@@ -102,8 +102,10 @@ public class LoginActivity extends AppCompatActivity {
                 loginViewModel.loginDataChanged(apiKeyEditText.getText().toString(), emailEditText.getText().toString());
             }
         };
-        //    usernameEditText.addTextChangedListener(afterTextChangedListener);
+
+        emailEditText.addTextChangedListener(afterTextChangedListener);
         apiKeyEditText.addTextChangedListener(afterTextChangedListener);
+
         apiKeyEditText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
 
             @Override
@@ -125,14 +127,8 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void updateUiWithUser(LoggedInUserView model) {
-       /* String welcome = getString(R.string.welcome) + model.getDisplayName();
-        // TODO : initiate successful logged in experience
-        Toast.makeText(getApplicationContext(), welcome, Toast.LENGTH_LONG).show(); */
-
         BackendServer.setLoggedInUser(new LoggedInUser(model.getApiKey(), model.getEmail()));
-
         Intent myIntent = new Intent(LoginActivity.this, MainActivity.class);
-        //myIntent.putExtra("api_key", model.getApiKey()); //Optional parameters
         LoginActivity.this.startActivity(myIntent);
     }
 
