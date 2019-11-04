@@ -1,135 +1,131 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:orientation="vertical">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="5dp"
+    android:layout_marginLeft="5dp"
+    android:layout_marginTop="5dp"
+    android:layout_marginRight="5dp"
+    android:layout_marginBottom="5dp"
+    android:layout_marginStart="5dp"
+    android:orientation="vertical"
+    tools:context=".TicketInfosActivity">
 
     <TableRow
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="20px">
+        android:layout_height="match_parent">
 
         <TextView
             android:id="@+id/firstNameTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Prénom :"
+            android:text="Prénom:"
             android:textSize="24sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            app:fontFamily="@font/montserrat" />
 
         <TextView
             android:id="@+id/firstName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_weight="3"
             android:ems="10"
-            android:gravity="left"
-            android:inputType="textPersonName"
+            android:gravity="start"
             android:text="First Name"
-            android:textSize="24sp" />
+            android:textSize="36sp"
+            app:fontFamily="@font/montserrat" />
     </TableRow>
 
     <TableRow
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="20px">
+        android:layout_marginTop="20dp">
 
         <TextView
             android:id="@+id/nameTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Nom :"
+            android:text="Nom:"
             android:textSize="24sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            app:fontFamily="@font/montserrat" />
 
         <TextView
             android:id="@+id/name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_weight="3"
             android:ems="10"
-            android:gravity="left"
-            android:inputType="textPersonName"
+            android:gravity="start"
             android:text="Name"
-            android:textSize="24sp" />
+            android:textSize="36sp"
+            app:fontFamily="@font/montserrat" />
     </TableRow>
 
     <TableRow
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="20px">
+        android:layout_marginTop="20dp">
 
         <TextView
             android:id="@+id/toPayTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="A payer :"
+            android:text="A payer:"
             android:textSize="24sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            app:fontFamily="@font/montserrat" />
 
         <TextView
             android:id="@+id/toPay"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_weight="3"
             android:ems="10"
-            android:gravity="left"
-            android:inputType="textPersonName"
+            android:gravity="start"
             android:text="To Pay"
-            android:textSize="24sp" />
+            android:textSize="36sp"
+            app:fontFamily="@font/montserrat" />
     </TableRow>
 
     <TableRow
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="20px">
+        android:layout_marginTop="20dp">
 
         <TextView
             android:id="@+id/hasPaidTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="A payé :"
+            android:text="A payé:"
             android:textSize="24sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            app:fontFamily="@font/montserrat" />
 
         <TextView
             android:id="@+id/hasPaid"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_weight="3"
             android:ems="10"
-            android:gravity="left"
-            android:inputType="textPersonName"
+            android:gravity="start"
             android:text="Has Paid"
-            android:textSize="24sp" />
+            android:textSize="36sp"
+            app:fontFamily="@font/montserrat" />
 
     </TableRow>
 
-    <TableRow
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="20px">
+    <TextView
+        android:id="@+id/alreadyScanned"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="Ce billet a déjà été scanné."
+        android:textColor="#FF6961"
+        android:textSize="28sp"
+        android:textStyle="bold"
+        app:fontFamily="@font/montserrat" />
 
-        <TextView
-            android:id="@+id/alreadyScannedTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Déjà scan :"
-            android:textSize="24sp"
-            android:textStyle="bold" />
-
-   <!--     <TextView
-
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:gravity="left"
-            android:inputType="textPersonName"
-            android:text="Already Scanned"
-            android:textSize="24sp" /> -->
-
-    </TableRow>
-
-    <Button
-        android:id="@+id/close"
-        android:layout_marginTop="20px"
-        android:text="Fermer" />
 </TableLayout>

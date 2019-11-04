@@ -49,6 +49,13 @@ public class BackendServer {
         return getUrl("scan", encodedArgs);
     }
 
+    public static String getStatsUrl(String apiKey, String email)
+    {
+        String args = apiKey + "§§" + email;
+        String encodedArgs = Base64.encodeToString(args.getBytes(),Base64.NO_WRAP | Base64.URL_SAFE);
+        return getUrl("stats", encodedArgs);
+    }
+
     public static String getUrl(String action, String args)
     {
         return "http://api.schawnndev.fr/" + action + "?id=" + args;

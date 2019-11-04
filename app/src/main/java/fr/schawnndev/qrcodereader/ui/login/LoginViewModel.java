@@ -27,7 +27,8 @@ public class LoginViewModel extends ViewModel {
     private MutableLiveData<LoginResult> loginResult = new MutableLiveData<>();
     private Context appContext;
 
-    LoginViewModel() { }
+    LoginViewModel() {
+    }
 
     LiveData<LoginFormState> getLoginFormState() {
         return loginFormState;
@@ -44,9 +45,9 @@ public class LoginViewModel extends ViewModel {
                     @Override
                     public void onResponse(JSONObject response) {
                         try {
-                            if (response==null || !response.has("success") || !response.getBoolean("success")){
+                            if (response == null || !response.has("success") || !response.getBoolean("success")) {
                                 loginResult.setValue(new LoginResult(R.string.login_failed));
-                            }else {
+                            } else {
                                 loginResult.setValue(new LoginResult(new LoggedInUserView(apiKey, email)));
                             }
                         } catch (JSONException e) {
@@ -59,8 +60,8 @@ public class LoginViewModel extends ViewModel {
                     public void onErrorResponse(VolleyError error) {
                         loginResult.setValue(new LoginResult(R.string.login_failed));
 
-                        for (StackTraceElement e:
-                        error.getStackTrace()) {
+                        for (StackTraceElement e :
+                                error.getStackTrace()) {
                             Log.e("[StackTrace]", e.toString());
                         }
                     }
@@ -90,8 +91,7 @@ public class LoginViewModel extends ViewModel {
         return apiKey != null && !apiKey.isEmpty();
     }
 
-    private boolean isEmailValid(String email)
-    {
+    private boolean isEmailValid(String email) {
         if (email == null || email.isEmpty())
             return false;
 

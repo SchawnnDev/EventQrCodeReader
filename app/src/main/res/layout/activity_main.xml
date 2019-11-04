@@ -20,11 +20,124 @@
         android:layout_weight=".4"
         android:orientation="vertical">
 
-        <Button
-            android:id="@+id/activeFlash"
+        <Switch
+            android:id="@+id/flashActivated"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Activer le flash" />
+            android:fontFamily="@font/montserrat"
+            android:text="@string/use_flash"
+            android:textSize="18sp" />
+
+        <Switch
+            android:id="@+id/scanActivated"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:checked="true"
+            android:fontFamily="@font/montserrat"
+            android:text="@string/use_scan"
+            android:textSize="18sp" />
+
+        <View
+            android:id="@+id/divider"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="10dp"
+            android:background="?android:attr/listDivider" />
+
+        <TextView
+            android:id="@+id/textStatistics"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="Statistiques"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/ticketsScannedTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:text="@string/stats_tickets_scanned"
+                    android:textColor="@android:color/black"
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:id="@+id/ticketsScanned"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:text="..."
+                    android:textColor="@android:color/black"
+                    android:textSize="24sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:layout_weight="1">
+
+                <TextView
+                    android:id="@+id/ticketsPayedTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:text="@string/stats_tickets_payed"
+                    android:textColor="@android:color/black"
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:id="@+id/ticketsPayed"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:text="..."
+                    android:textColor="@android:color/black"
+                    android:textSize="24sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:layout_weight="1">
+
+                <TextView
+                    android:id="@+id/ticketsPayedScannedTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:text="@string/stats_tickets_payed_scanned"
+                    android:textColor="@android:color/black"
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:id="@+id/ticketsPayedScanned"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:text="..."
+                    android:textColor="@android:color/black"
+                    android:textSize="24sp" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+
 
     </LinearLayout>
+
 </LinearLayout>
