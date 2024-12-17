@@ -42,7 +42,7 @@ public class MainActivity extends AppCompatActivity implements BarcodeReaderFrag
     private BarcodeReaderFragment mBarcodeReaderFragment;
     private boolean isRequesting = false;
     private boolean isRequestingStats = false;
-    private List<String> scanned = new ArrayList<>();
+    private final List<String> scanned = new ArrayList<>();
     private final Pattern regexBase64 = Pattern.compile("^([A-Za-z0-9+/]{4})*([A-Za-z0-9+/]{3}=|[A-Za-z0-9+/]{2}==)?$");
 
     @Override
@@ -106,37 +106,33 @@ public class MainActivity extends AppCompatActivity implements BarcodeReaderFrag
         String url = BackendServer.getScanUrl(BackendServer.getLoggedInUser().getApiKey(), BackendServer.getLoggedInUser().getEmail(), qrCode);
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
-                (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+                (Request.Method.GET, url, null, response -> {
+                    try {
 
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        try {
+                        if (response == null || !response.has("success") || !response.getBoolean("success")) {
+                            isRequesting = false;
 
-                            if (response == null || !response.has("success") || !response.getBoolean("success")) {
+                            if(response.has("error"))
+                                Toast.makeText(getApplicationContext(), response.getString("error"), Toast.LENGTH_SHORT).show();
+                            return;
+                        }
+
+                        for (String val : scanValues) {
+                            if (!response.has(val)) {
                                 isRequesting = false;
-
-                                if(response.has("error"))
-                                    Toast.makeText(getApplicationContext(), response.getString("error"), Toast.LENGTH_SHORT).show();
                                 return;
                             }
-
-                            for (String val : scanValues) {
-                                if (!response.has(val)) {
-                                    isRequesting = false;
-                                    return;
-                                }
-                            }
-
-                            startTimer(qrCode);
-
-                            showScanInfos(new JsonScan(response.getString("firstName"), response.getString("lastName"),
-                                    response.getBoolean("hasPaid"), response.getBoolean("alreadyScanned"), response.getDouble("toPay"), response.getString("lastScanDate")));
-
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        } finally {
-                            isRequesting = false;
                         }
+
+                        startTimer(qrCode);
+
+                        showScanInfos(new JsonScan(response.getString("firstName"), response.getString("lastName"),
+                                response.getBoolean("hasPaid"), response.getBoolean("alreadyScanned"), response.getDouble("toPay"), response.getString("lastScanDate")));
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    } finally {
+                        isRequesting = false;
                     }
                 }, new Response.ErrorListener() {
 
