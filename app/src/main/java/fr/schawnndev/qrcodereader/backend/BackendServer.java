@@ -58,7 +58,7 @@ public class BackendServer {
 
     public static String getUrl(String action, String args)
     {
-        return "http://api.schawnndev.fr/" + action + "?id=" + args;
+        return "https://api.tickets.schawnndev.fr/" + action + "?id=" + args;
        // return "https://jsonplaceholder.typicode.com/todos/1";
     }
 
